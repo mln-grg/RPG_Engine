@@ -6,6 +6,11 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "RPGGameplayTags.h"
+#include "Components/Input/RPGInputComponent.h"
+#include "DataAssets/Input/DataAsset_InputConfig.h"
+
 #include "RPG_Engine/Public/RPGDebugHelper.h"
 
 
@@ -33,9 +38,58 @@ ARPGHeroCharacter::ARPGHeroCharacter()
 	
 }
 
+void ARPGHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	checkf(InputConfigDataAsset, TEXT("DataAsset is invalid"))
+	
+	ULocalPlayer* LocalPlayer = GetController<APlayerController>()->GetLocalPlayer();
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
+
+	check(Subsystem)
+
+	Subsystem->AddMappingContext(InputConfigDataAsset->DefaultMappingContext,0);
+
+	URPGInputComponent* RPGInputComponent = CastChecked<URPGInputComponent>(PlayerInputComponent);
+	RPGInputComponent->BindNativeInputAction(InputConfigDataAsset,RPGGameplayTags::InputTag_Move,ETriggerEvent::Triggered,this,&ThisClass::Input_Move);
+	RPGInputComponent->BindNativeInputAction(InputConfigDataAsset,RPGGameplayTags::InputTag_Look,ETriggerEvent::Triggered,this,&ThisClass::Input_Look);
+}
+
 void ARPGHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
 	Debug::Print(TEXT("Working"));
+}
+
+void ARPGHeroCharacter::Input_Move(const FInputActionValue& InputActionValue)
+{
+	const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
+	const FRotator MovementRotation(0,Controller->GetControlRotation().Yaw,0);
+
+	if(MovementVector.Y!=0)
+	{
+		const FVector ForwardDirection = MovementRotation.RotateVector(FVector::ForwardVector);
+		AddMovementInput(ForwardDirection,MovementVector.Y);
+	}
+
+	if(MovementVector.X!=0)
+	{
+		const FVector RightDirection = MovementRotation.RotateVector(FVector::RightVector);
+		AddMovementInput(RightDirection,MovementVector.X);
+	}
+}
+
+void ARPGHeroCharacter::Input_Look(const FInputActionValue& InputActionValue)
+{
+	const FVector2D LookAxixVector = InputActionValue.Get<FVector2D>();
+
+	if(LookAxixVector.X!=0)
+	{
+		AddControllerYawInput(LookAxixVector.X);
+	}
+
+	if(LookAxixVector.Y !=0)
+	{
+		AddControllerPitchInput(LookAxixVector.Y);
+	}
 }
