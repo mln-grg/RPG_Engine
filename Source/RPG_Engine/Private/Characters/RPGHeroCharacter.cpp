@@ -8,8 +8,11 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "RPGGameplayTags.h"
+#include "AbilitySystem/RPGAbilitySystemComponent.h"
+#include "Components/Combat/HeroCombatComponent.h"
 #include "Components/Input/RPGInputComponent.h"
 #include "DataAssets/Input/DataAsset_InputConfig.h"
+#include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 
 #include "RPG_Engine/Public/RPGDebugHelper.h"
 
@@ -35,7 +38,22 @@ ARPGHeroCharacter::ARPGHeroCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0,500,0);
 	GetCharacterMovement()->MaxWalkSpeed = 400;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000;
+
+	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
 	
+}
+
+void ARPGHeroCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if(!CharacterStartUpData.IsNull())
+	{
+		if(UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous())
+		{
+			LoadedData->GiveToAbilitySystemComponent(RPGAbilitySystemComponent);
+		}
+	}
 }
 
 void ARPGHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -57,8 +75,6 @@ void ARPGHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 void ARPGHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Debug::Print(TEXT("Working"));
 }
 
 void ARPGHeroCharacter::Input_Move(const FInputActionValue& InputActionValue)

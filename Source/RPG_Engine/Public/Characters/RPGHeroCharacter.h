@@ -6,6 +6,7 @@
 #include "RPG_Engine/Public/Characters/RPGBaseCharacter.h"
 #include "RPGHeroCharacter.generated.h"
 
+class UHeroCombatComponent;
 struct FInputActionValue;
 class UDataAsset_InputConfig;
 class UCameraComponent;
@@ -21,6 +22,11 @@ class RPG_ENGINE_API ARPGHeroCharacter : public ARPGBaseCharacter
 	ARPGHeroCharacter();
 	
 protected:
+
+	//~ Begin APawn Interface.
+	virtual void PossessedBy(AController* NewController) override;
+	//~ End APawn Interface.
+	
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay() override;
 
@@ -32,6 +38,9 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Camera",meta=(AllowPrivateAccess))
 	UCameraComponent* FollowCam;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Combat", meta = (AllowPrivateAccess = "true"))
+	UHeroCombatComponent* HeroCombatComponent;
+
 #pragma endregion
 #pragma region Inputs
 	
@@ -42,5 +51,7 @@ protected:
 	void Input_Look(const FInputActionValue& InputActionValue);
 	
 #pragma endregion 
-	
+
+public:
+	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return  HeroCombatComponent;}
 };
