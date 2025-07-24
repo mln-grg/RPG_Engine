@@ -18,7 +18,9 @@ class RPG_ENGINE_API URPGInputComponent : public UEnhancedInputComponent
 public:
 	template<class UserObject,typename CallbackFunc>
 	void BindNativeInputAction(const UDataAsset_InputConfig* InInputConfig,const FGameplayTag& InInputTag,ETriggerEvent TriggerEvent,UserObject* ContextObject,CallbackFunc Func);
-	
+
+	template<class UserObject,typename CallbackFunc>
+	void BindAbilityInputAction(const UDataAsset_InputConfig* InInputConfig,UserObject* ContextObject,CallbackFunc InputPressedFunc,CallbackFunc InputReleasedFunc);
 };
 
 template <class UserObject, typename CallbackFunc>
@@ -30,5 +32,19 @@ void URPGInputComponent::BindNativeInputAction(const UDataAsset_InputConfig* InI
 	if(UInputAction* FoundAction = InInputConfig->FindNativeInputActionByTag(InInputTag))
 	{
 		BindAction(FoundAction,TriggerEvent,ContextObject,Func);
+	}
+}
+
+template <class UserObject, typename CallbackFunc>
+void URPGInputComponent::BindAbilityInputAction(const UDataAsset_InputConfig* InInputConfig, UserObject* ContextObject,
+	CallbackFunc InputPressedFunc, CallbackFunc InputReleasedFunc)
+{
+	checkf(InInputConfig,TEXT("Input Config Data Asset is null!"));
+	for(const FRPGInputActionConfig& AbilityInputActionConfig: InInputConfig->AbilityInputActions)
+	{
+		if(!AbilityInputActionConfig.IsValid()) continue;
+
+		BindAction(AbilityInputActionConfig.InputAction,ETriggerEvent::Started,ContextObject,InputPressedFunc,AbilityInputActionConfig.InputTag);
+		BindAction(AbilityInputActionConfig.InputAction,ETriggerEvent::Completed,ContextObject,InputReleasedFunc,AbilityInputActionConfig.InputTag);
 	}
 }

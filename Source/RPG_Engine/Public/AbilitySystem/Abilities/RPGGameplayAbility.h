@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "AbilitySystem/RPGAbilitySystemComponent.h"
 #include "RPGGameplayAbility.generated.h"
 
+class URPGAbilitySystemComponent;
 class UPawnCombatComponent;
 
 UENUM(BlueprintType)
@@ -33,5 +35,7 @@ protected:
 
 	UFUNCTION(BlueprintPure, Category="RPG|Ability")
 	UPawnCombatComponent* GetPawnCombatComponentFromActorInfo() const;
-	
+
+	UFUNCTION(BlueprintPure, Category="RPG|Ability")
+	URPGAbilitySystemComponent* GetRPGAbilitySystemComponentFromActorInfo() const;
 };
