@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Items/Weapons/RPGWeaponBase.h"
+#include "RPGTypes/RPGStructTypes.h"
 #include "RPGHeroWeapon.generated.h"
 
 /**
@@ -13,5 +14,7 @@ UCLASS()
 class RPG_ENGINE_API ARPGHeroWeapon : public ARPGWeaponBase
 {
 	GENERATED_BODY()
-	
+public:
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="WeaponData")
+	FRPGHeroWeaponData HeroWeaponData;
 };
