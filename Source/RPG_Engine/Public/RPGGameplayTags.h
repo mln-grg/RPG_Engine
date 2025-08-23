@@ -14,5 +14,7 @@ namespace RPGGameplayTags
 	
 	/** Player Tags **/
 	RPG_ENGINE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe);
+	RPG_ENGINE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(PlayerEvent_Equip_Axe);
+	RPG_ENGINE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(PlayerEvent_UnEquip_Axe);
 	
 }

@@ -14,4 +14,7 @@ namespace RPGGameplayTags
 
 	/** Player Tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe,"Player.Weapon.Axe");
+	
+	UE_DEFINE_GAMEPLAY_TAG(PlayerEvent_Equip_Axe,"Player.Event.Equip.Axe");
+	UE_DEFINE_GAMEPLAY_TAG(PlayerEvent_UnEquip_Axe,"Player.Event.UnEquip.Axe");
 }
