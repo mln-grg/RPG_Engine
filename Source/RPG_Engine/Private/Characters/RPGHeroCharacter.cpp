@@ -70,6 +70,8 @@ void ARPGHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	URPGInputComponent* RPGInputComponent = CastChecked<URPGInputComponent>(PlayerInputComponent);
 	RPGInputComponent->BindNativeInputAction(InputConfigDataAsset,RPGGameplayTags::InputTag_Move,ETriggerEvent::Triggered,this,&ThisClass::Input_Move);
 	RPGInputComponent->BindNativeInputAction(InputConfigDataAsset,RPGGameplayTags::InputTag_Look,ETriggerEvent::Triggered,this,&ThisClass::Input_Look);
+
+	RPGInputComponent->BindAbilityInputAction(InputConfigDataAsset,this,&ThisClass::Input_AbilityInputPressed,&ThisClass::Input_AbilityInputReleased);
 }
 
 void ARPGHeroCharacter::BeginPlay()
@@ -108,4 +110,14 @@ void ARPGHeroCharacter::Input_Look(const FInputActionValue& InputActionValue)
 	{
 		AddControllerPitchInput(LookAxixVector.Y);
 	}
+}
+
+void ARPGHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	RPGAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
+}
+
+void ARPGHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	RPGAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
 }
