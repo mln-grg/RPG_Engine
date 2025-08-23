@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Items/Weapons/RPGWeaponBase.h"
 #include "RPGTypes/RPGStructTypes.h"
+#include "GameplayAbilitySpecHandle.h"
 #include "RPGHeroWeapon.generated.h"
 
 /**
@@ -17,4 +18,13 @@ class RPG_ENGINE_API ARPGHeroWeapon : public ARPGWeaponBase
 public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="WeaponData")
 	FRPGHeroWeaponData HeroWeaponData;
+
+	UFUNCTION(BlueprintCallable)
+	void AssignGrantedAbilitySpecHandles(const TArray<FGameplayAbilitySpecHandle>& InSpecHandles);
+
+	UFUNCTION(BlueprintPure)
+	TArray<FGameplayAbilitySpecHandle> GetGrantedAbilitySpecHandles() const;
+	
+private:
+	TArray<FGameplayAbilitySpecHandle> GrantedAbilitySpecHandles;
 };
