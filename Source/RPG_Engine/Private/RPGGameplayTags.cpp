@@ -18,8 +18,8 @@ namespace RPGGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Equip_Weapon,"Player.Ability.Equip.Weapon");
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Unequip_Weapon,"Player.Ability.Unequip.Weapon");
 	
-	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Light,"Player.Ability.Attack.Light");
-	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Heavy,"Player.Ability.Attack.Heavy");
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Light_Weapon,"Player.Ability.Attack.Light.Weapon");
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Heavy_Weapon,"Player.Ability.Attack.Heavy.Weapon");
 	
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe,"Player.Weapon.Axe");
 	
