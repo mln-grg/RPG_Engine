@@ -25,4 +25,7 @@ namespace RPGGameplayTags
 	
 	UE_DEFINE_GAMEPLAY_TAG(PlayerEvent_Equip_Weapon,"Player.Event.Equip.Weapon");
 	UE_DEFINE_GAMEPLAY_TAG(PlayerEvent_Unequip_Weapon,"Player.Event.Unequip.Weapon");
+
+	UE_DEFINE_GAMEPLAY_TAG(Player_Status_JumpToFinisher,"Player.Status.JumpToFinisher");
+	
 }

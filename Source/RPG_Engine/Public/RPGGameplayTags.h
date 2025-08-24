@@ -27,5 +27,8 @@ namespace RPGGameplayTags
 	/** Event Tags **/
 	RPG_ENGINE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(PlayerEvent_Equip_Weapon);
 	RPG_ENGINE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(PlayerEvent_UnEquip_Weapon);
-	
+
+	/** Status Tags **/
+
+	RPG_ENGINE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_JumpToFinisher);
 }
