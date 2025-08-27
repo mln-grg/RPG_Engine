@@ -4,8 +4,8 @@
 #include "GameplayTagContainer.h"
 #include "RPGStructTypes.generated.h"
 
+class URPGHeroGameplayAbility;
 class UInputMappingContext;
-class URPGGameplayAbility;
 class URPGHeroLinkedAnimLayer;
 
 USTRUCT(BlueprintType)
@@ -17,7 +17,7 @@ struct FRPGHeroAbilitySet
 	FGameplayTag InputTag;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<URPGGameplayAbility> AbilityToGrant;
+	TSubclassOf<URPGHeroGameplayAbility> AbilityToGrant;
 
 	bool IsValid() const;
 };
